@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>It's a Date! ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.96);
+            padding: 40px 30px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            animation: appear 1s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .heart {
+            font-size: 70px;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        h1 {
+            color: #d6336c;
+            font-size: 38px;
+            margin: 15px 0;
+        }
+
+        .message {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .details {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .detail-card {
+            background: #fff0f5;
+            padding: 18px;
+            border-radius: 18px;
+            border: 2px solid #ffd1df;
+        }
+
+        .detail-title {
+            color: #d6336c;
+            font-size: 16px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .detail-value {
+            color: #444;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #d6336c;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .floating-heart {
+            position: fixed;
+            bottom: -30px;
+            font-size: 25px;
+            animation: floatUp 6s linear infinite;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-110vh);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .heart {
+                font-size: 55px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="heart">❤️</div>
+
+    <h1>It's a Date! 🎉</h1>
+
+    <p class="message">
+        Everything is ready for our special day! 💕
+    </p>
+
+    <div class="details">
+
+        <div class="detail-card">
+            <div class="detail-title">
+                📅 OUR DATE
+            </div>
+
+            <div class="detail-value" id="date">
+                Loading...
+            </div>
+        </div>
+
+
+        <div class="detail-card">
+            <div class="detail-title">
+                🍴 FOOD
+            </div>
+
+            <div class="detail-value" id="food">
+                Loading...
+            </div>
+        </div>
+
+
+        <div class="detail-card">
+            <div class="detail-title">
+                🌸 FLOWER
+            </div>
+
+            <div class="detail-value" id="flower">
+                Loading...
+            </div>
+        </div>
+
+
+        <div class="detail-card">
+            <div class="detail-title">
+                🍰 DESSERT
+            </div>
+
+            <div class="detail-value" id="dessert">
+                Loading...
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Can't wait for our day! ❤️🌸🍰
+    </div>
+
+</div>
+
+
+<script>
+
+    // Get saved information
+    const selectedDate = localStorage.getItem("date");
+    const selectedFood = localStorage.getItem("food");
+    const selectedFlower = localStorage.getItem("flower");
+    const selectedDessert = localStorage.getItem("dessert");
+
+
+    // Show date
+    if (selectedDate) {
+
+        const dateObject = new Date(selectedDate);
+
+        const formattedDate = dateObject.toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+
+        document.getElementById("date").innerText = formattedDate;
+
+    } else {
+
+        document.getElementById("date").innerText = "Not selected";
+
+    }
+
+
+    // Show food
+    document.getElementById("food").innerText =
+        selectedFood || "Not selected";
+
+
+    // Show flower
+    document.getElementById("flower").innerText =
+        selectedFlower || "Not selected";
+
+
+    // Show dessert
+    document.getElementById("dessert").innerText =
+        selectedDessert || "Not selected";
+
+
+    // Floating hearts
+    function createHeart() {
+
+        const heart = document.createElement("div");
+
+        heart.classList.add("floating-heart");
+
+        heart.innerText = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+
+        heart.style.animationDuration =
+            (4 + Math.random() * 4) + "s";
+
+        document.body.appendChild(heart);
+
+
+        setTimeout(() => {
+            heart.remove();
+        }, 8000);
+    }
+
+
+    setInterval(createHeart, 700);
+
+</script>
+
+</body>
+</html>
